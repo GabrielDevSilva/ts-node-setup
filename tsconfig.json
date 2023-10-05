@@ -1,0 +1,23 @@
+{
+	"compilerOptions": {
+		"target": "es2016",
+		"lib": ["es6"],
+		"module": "commonjs",
+		"baseUrl": "./",
+		"paths": {
+			"~/*": ["*"],
+			"@/*": ["src/*"],
+			"@types/": ["@types/*"],
+			"@types": ["@types/index.ts"]
+		},
+		"resolveJsonModule": true,
+		"allowJs": true,
+		"outDir": "dist",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+
+		"strict": true,
+		"noImplicitAny": true,
+		"skipLibCheck": true
+	}
+}
