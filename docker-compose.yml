@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  db-integrator:
+    platform: linux/x86_64
+    image: postgres
+    restart: always
+    container_name: pgIntegrator
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    ports:
+      - '${DB_PORT}:5432'
+    volumes:
+      - dataIntegrator:/var/lib/postgresql/data
+    networks:
+      - db_network
+  integrator:
+    build:
+      dockerfile: Dockerfile
+    container_name: integrator
+    restart: always
+    environment:
+      DB_HOST: db-integrator
+      # NODE_ENV: ${NODE_ENV}
+    depends_on:
+      - db-integrator
+    ports:
+      - '${PORT}:8080'
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - db_network
+
+volumes:
+  dataIntegrator:
+    name: dataIntegrator
+  integrator:
+    name: integrator
+
+networks:
+  db_network:
+    name: db_network
